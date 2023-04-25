@@ -6,15 +6,13 @@ module Types
     include GraphQL::Types::Relay::HasNodeField
     include GraphQL::Types::Relay::HasNodesField
 
-    # Add root-level fields here.
-    # They will be entry points for queries on your schema.
+    field :best, [LiftType], null: false do
+      argument :user_id, String, required: true
+      argument :lift_type, String, required: true
+    end
 
-    # TODO: remove me
-    field :squats, [LiftType], null: false,
-                               description: 'Get all squats'
-
-    def squats
-      Lift.where({ lift_type: 'Squat' })
+    def best(user_id:, lift_type:)
+      Lift.best(user_id, lift_type)
     end
   end
 end

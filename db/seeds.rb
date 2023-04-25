@@ -11,13 +11,14 @@
 require 'faker'
 
 lift_types = %w[Squat Bench Deadlift]
-user_ids = [Faker::Stripe.unique.invalid_card, Faker::Stripe.unique.invalid_card, Faker::Stripe.unique.invalid_card]
-50.times do
+user_ids = [1, Faker::Stripe.unique.invalid_card, Faker::Stripe.unique.invalid_card, Faker::Stripe.unique.invalid_card]
+
+100.times do
   Lift.create!({
                  user_id: user_ids.sample,
                  lift_type: lift_types.sample,
                  reps: Faker::Number.between(from: 1, to: 10),
-                 weight: Faker::Number.between(from: 45.0, to: 1000.0),
+                 weight: Faker::Number.decimal(l_digits: 3, r_digits: 1),
                  date_lifted: Time.current
                })
 end
